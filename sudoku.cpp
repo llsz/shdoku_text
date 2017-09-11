@@ -1,7 +1,10 @@
+
+
 // sudo.cpp : 定义控制台应用程序的入口点。
 //
 
 #include "stdafx.h"
+
 
 #include<iostream>
 #include<algorithm>
@@ -10,6 +13,8 @@
 #include<stdlib.h>
 #include<fstream>
 #include<cstring>
+#include<string>
+
 using namespace std;
 int Sudoku_out();
 void start(int t);
@@ -19,35 +24,31 @@ bool Sudoku_dfs(int i, int j);
 
 int num[12][12];
 //ofstream outfile("sudoku.txt",ios::out);
-int main(int argc,char *args[])
+int main(int argc, char* argv[])
 {
-	freopen("sudoku.txt", "w", stdout);
+	string file_name = "sudoku.txt";
+	string tmp = argv[0];
+	int pos = tmp.rfind('\\');
+	string file_path = "";
+	for (int i = 0; i <= pos; ++i) file_path += tmp[i];
+	file_path += file_name;
+	
+	freopen(file_path.c_str(), "w", stdout);
 
-	for (int i = 0; i < strlen(args[2]); i++)
-	{
-		if (args[2][i] <= '9' && args[2][i] >= '0')
-			continue;
-		else
-		{
-			cout << "请输入正确参数!!" << endl;
-			return 0;
-		}
-	}
-	string str(args[2]);
-	int number = std::atoi(str.c_str());
-	printf("参数正确，开始生成%d个数独\n", number);
-	while (number--) {
-		start(number);
+	int n = 0;
+	//n = atoi(argv[2]);
+	int len = strlen(argv[2]);
+	for (int i = 0; i < len; ++i) n = n * 10 + argv[2][i] - '0';
+	cout << n << endl;
+	while (n--) {
+		start(n);
 		Sudoku_dfs(1, 0);
 		Sudoku_out();
-
 	}
-	
-	
 
 
-	system("pause");
-	return 0;
+	//system("pause");
+
 
 }
 
@@ -57,15 +58,15 @@ int Sudoku_out()
 
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
-			
+
 			cout << num[i][j] << ' ';
 			//outfile<<num[i][j]<<' ';
 		}
-	
+
 		cout << endl;
 		//outfile<<endl;
 	}
-	
+
 	cout << endl;
 	//outfile<<endl;
 	return 0;
@@ -134,8 +135,6 @@ bool Sudoku_dfs(int i, int j)
 			}
 			num[i][j] = 0;
 		}
-
-
 	}
 	return false;
 }
