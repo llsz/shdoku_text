@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 	//n = atoi(argv[2]);
 	int len = strlen(argv[2]);
 	for (int i = 0; i < len; ++i) n = n * 10 + argv[2][i] - '0';
-	cout << n << endl;
+	//cout << n << endl;
 	while (n--) {
 		start(n);
 		Sudoku_dfs(1, 0);
